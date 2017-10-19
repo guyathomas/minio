@@ -1,0 +1,8 @@
+**/.DS_Store
+**/node_modules
+
+#docker-compose env file
+.env
+
+# Logs
+*.log

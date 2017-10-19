@@ -1,0 +1,88 @@
+version: '3'
+
+services:
+ minio1:
+  image: pixelchrome/minio-arm
+  volumes:
+   - bluxomous-minio1:/export
+  ports:
+   - "9001:9000"
+  networks:
+   - minio_distributed
+  env_file: .env
+  deploy:
+   restart_policy:
+    delay: 10s
+    max_attempts: 10
+    window: 60s
+  command: server http://minio1/export http://minio2/export http://minio3/export http://minio4/export 
+  deploy:
+    placement:
+      constraints:
+       - node.labels.arch == arm
+ minio2:
+  image: pixelchrome/minio-arm
+  volumes:
+   - bluxomous-minio2:/export
+  ports:
+   - "9002:9000"
+  networks:
+   - minio_distributed
+  env_file: .env
+  deploy:
+   restart_policy:
+    delay: 10s
+    max_attempts: 10
+    window: 60s
+  command: server http://minio1/export http://minio2/export http://minio3/export http://minio4/export 
+  deploy:
+    placement:
+      constraints:
+       - node.labels.arch == arm
+ minio3:
+  image: pixelchrome/minio-arm
+  volumes:
+   - bluxomous-minio3:/export
+  ports:
+   - "9003:9000"
+  networks:
+   - minio_distributed
+  env_file: .env
+  deploy:
+   restart_policy:
+    delay: 10s
+    max_attempts: 10
+    window: 60s
+  command: server http://minio1/export http://minio2/export http://minio3/export http://minio4/export 
+  deploy:
+    placement:
+      constraints:
+       - node.labels.arch == arm
+ minio4:
+  image: pixelchrome/minio-arm
+  volumes:
+   - bluxomous-minio4:/export
+  ports:
+   - "9004:9000"
+  networks:
+   - minio_distributed
+  env_file: .env
+  deploy:
+   restart_policy:
+    delay: 10s
+    max_attempts: 10
+    window: 60s
+  command: server http://minio1/export http://minio2/export http://minio3/export http://minio4/export 
+  deploy:
+    placement:
+      constraints:
+       - node.labels.arch == arm
+volumes:
+  bluxomous-minio1:
+  bluxomous-minio2:
+  bluxomous-minio3:
+  bluxomous-minio4:
+
+networks:
+ minio_distributed:
+  driver: overlay
