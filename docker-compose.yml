@@ -9,32 +9,28 @@ services:
     - 9000
   env_file: .env
   command: server /export
-  environment:
-    VIRTUAL_HOST: s3.bluxomous.com
-    LETSENCRYPT_HOST: s3.bluxomous.com
-    LETSENCRYPT_EMAIL: guythomas721@gmail.com
  # minio2:
  #  image: minio/minio
  #  volumes:
  #   - bluxomous-minio2:/export
- #  ports:
- #   - "9002:9000"
+ #  expose:
+ #   - 9000 
  #  env_file: .env
  #  command: server /export
  # minio3:
  #  image: minio/minio
  #  volumes:
  #   - bluxomous-minio3:/export
- #  ports:
- #   - "9003:9000"
+ #  expose:
+ #    - 9000
  #  env_file: .env
  #  command: server /export
  # minio4:
  #  image: minio/minio
  #  volumes:
  #   - bluxomous-minio4:/export
- #  ports:
- #   - "9004:9000"
+ # expose:
+ #  - 9000
  #  env_file: .env
  #  command: server /export
 networks:
