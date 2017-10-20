@@ -1,6 +1,23 @@
 version: '3'
 
 services:
+ nginx:
+   build: ./nginx
+   container_name: bluxomous-nginx
+   expose:
+     - 80
+     - 443
+   links:
+     - app
+     - landing
+     - screenshot
+   depends_on:
+     - 'app'
+     - 'landing'
+   environment:
+     VIRTUAL_HOST: s3.bluxomous.com
+     LETSENCRYPT_HOST: s3.bluxomous.com
+     LETSENCRYPT_EMAIL: guythomas721@gmail.com
  minio1:
   image: minio/minio
   volumes:
