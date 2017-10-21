@@ -86,3 +86,6 @@ volumes:
 networks:
  minio_distributed:
   driver: overlay
+  default:
+    external:
+      name: nginx-proxy
