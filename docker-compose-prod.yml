@@ -4,15 +4,14 @@ services:
  minio1:
   image: pixelchrome/minio-arm
   volumes:
-   - vol-minio1:/export
-   - /mnt/minio/prod,dst=/export
+   - minio1-data:/export
+   - /mnt/minio/prod:/export
   ports:
    - "9001:9000"
   expose:
    - 9000
   networks:
    - minio_distributed
-   # - ntw_minio
   env_file: .env
   deploy:
    restart_policy:
@@ -27,15 +26,14 @@ services:
  minio2:
   image: pixelchrome/minio-arm
   volumes:
-   - vol-minio2:/export
-   - /mnt/minio/prod,dst=/export
+   - minio2-data:/export
+   - /mnt/minio/prod:/export
   ports:
    - "9002:9000"
   expose:
    - 9000
   networks:
    - minio_distributed
-   # - ntw_minio
   env_file: .env
   deploy:
    restart_policy:
@@ -50,15 +48,14 @@ services:
  minio3:
   image: pixelchrome/minio-arm
   volumes:
-   - vol-minio3:/export
-   - /mnt/minio/prod,dst=/export
+   - minio3-data:/export
+   - /mnt/minio/prod:/export
   ports:
    - "9003:9000"
   expose:
    - 9000
   networks:
    - minio_distributed
-   # - ntw_minio
   env_file: .env
   deploy:
    restart_policy:
@@ -73,15 +70,14 @@ services:
  minio4:
   image: pixelchrome/minio-arm
   volumes:
-   - vol-minio4:/export
-   - /mnt/minio/prod,dst=/export
+   - minio4-data:/export
+   - /mnt/minio/prod:/export
   ports:
    - "9004:9000"
   expose:
    - 9000
   networks:
    - minio_distributed
-   # - ntw_minio
   env_file: .env
   deploy:
    restart_policy:
@@ -94,14 +90,14 @@ services:
       constraints:
        - node.hostname == node3
 volumes:
-  vol-minio1:
-  vol-minio2:
-  vol-minio3:
-  vol-minio4:
+  minio1-data:
+  minio2-data:
+  minio3-data:
+  minio4-data:
 
 networks:
   minio_distributed:
     driver: overlay
-  # default:
-  #   external:
-  #     name: nginx-proxy
+  default:
+    external:
+      name: nginx-proxy
