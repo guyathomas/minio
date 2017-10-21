@@ -83,4 +83,3 @@ networks:
   default:
     external:
       name: minio_distributed
-        driver: overlay
