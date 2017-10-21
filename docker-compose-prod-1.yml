@@ -2,7 +2,7 @@ version: '3'
 
 services:
  minio1:
-  image: docker pull pixelchrome/minio-arm
+  image: pixelchrome/minio-arm
   volumes:
    - vol-minio1:/export
   expose:

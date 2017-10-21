@@ -2,7 +2,7 @@ version: '3'
 
 services:
  minio1:
-  image: docker pull pixelchrome/minio-arm
+  image: pixelchrome/minio-arm
   volumes:
    - vol-minio1:/export
   ports:
@@ -23,7 +23,7 @@ services:
       constraints:
        - node.labels.arch == arm
  minio2:
-  image: docker pull pixelchrome/minio-arm
+  image: pixelchrome/minio-arm
   volumes:
    - vol-minio2:/export
   ports:
@@ -44,7 +44,7 @@ services:
       constraints:
        - node.labels.arch == arm
  minio3:
-  image: docker pull pixelchrome/minio-arm
+  image: pixelchrome/minio-arm
   volumes:
    - vol-minio3:/export
   ports:
@@ -65,7 +65,7 @@ services:
       constraints:
        - node.labels.arch == arm
  minio4:
-  image: docker pull pixelchrome/minio-arm
+  image: pixelchrome/minio-arm
   volumes:
    - vol-minio4:/export
   ports:
