@@ -80,8 +80,7 @@ volumes:
   minio4-data:
 
 networks:
-  minio_distributed:
-    driver: overlay
-  # default:
-  #   external:
-  #     name: nginx-proxy
+  default:
+    external:
+      minio_distributed:
+        driver: overlay
