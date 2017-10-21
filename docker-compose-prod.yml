@@ -4,7 +4,7 @@ services:
  minio1:
   image: pixelchrome/minio-arm
   volumes:
-   - minio1-data:/export
+   # - minio1-data:/export
    - /mnt/minio/prod:/export
   ports:
    - "9001:9000"
@@ -26,7 +26,7 @@ services:
  minio2:
   image: pixelchrome/minio-arm
   volumes:
-   - minio2-data:/export
+   # - minio2-data:/export
    - /mnt/minio/prod:/export
   ports:
    - "9002:9000"
@@ -48,7 +48,7 @@ services:
  minio3:
   image: pixelchrome/minio-arm
   volumes:
-   - minio3-data:/export
+   # - minio3-data:/export
    - /mnt/minio/prod:/export
   ports:
    - "9003:9000"
@@ -70,7 +70,7 @@ services:
  minio4:
   image: pixelchrome/minio-arm
   volumes:
-   - minio4-data:/export
+   # - minio4-data:/export
    - /mnt/minio/prod:/export
   ports:
    - "9004:9000"
@@ -89,11 +89,11 @@ services:
     placement:
       constraints:
        - node.hostname == node3
-volumes:
-  minio1-data:
-  minio2-data:
-  minio3-data:
-  minio4-data:
+# volumes:
+  # minio1-data:
+#   minio2-data:
+#   minio3-data:
+#   minio4-data:
 
 networks:
   minio_distributed:
