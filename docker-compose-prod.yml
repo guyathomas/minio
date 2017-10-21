@@ -4,10 +4,10 @@ services:
  minio1:
   image: pixelchrome/minio-arm
   volumes:
-   # - minio1-data:/export
-   - /mnt/minio/prod:/export
-  networks:
-   - minio_distributed
+   - minio1-data:/export
+   # - /mnt/minio/prod:/export
+  # networks:
+  #  - minio_distributed
   env_file: .env
   deploy:
    restart_policy:
@@ -22,10 +22,10 @@ services:
  minio2:
   image: pixelchrome/minio-arm
   volumes:
-   # - minio2-data:/export
-   - /mnt/minio/prod:/export
-  networks:
-   - minio_distributed
+   - minio2-data:/export
+   # - /mnt/minio/prod:/export
+  # networks:
+  #  - minio_distributed
   env_file: .env
   deploy:
    restart_policy:
@@ -40,10 +40,10 @@ services:
  minio3:
   image: pixelchrome/minio-arm
   volumes:
-   # - minio3-data:/export
-   - /mnt/minio/prod:/export
-  networks:
-   - minio_distributed
+   - minio3-data:/export
+   # - /mnt/minio/prod:/export
+  # networks:
+  #  - minio_distributed
   env_file: .env
   deploy:
    restart_policy:
@@ -58,10 +58,10 @@ services:
  minio4:
   image: pixelchrome/minio-arm
   volumes:
-   # - minio4-data:/export
-   - /mnt/minio/prod:/export
-  networks:
-   - minio_distributed
+   - minio4-data:/export
+   # - /mnt/minio/prod:/export
+  # networks:
+  #  - minio_distributed
   env_file: .env
   deploy:
    restart_policy:
