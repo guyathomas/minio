@@ -2,11 +2,11 @@ version: '3'
 
 services:
  minio1:
-  image: pixelchrome/minio-arm
+  image: docker pull pixelchrome/minio-arm
   volumes:
-   - bluxomous-minio1:/export
-  expose:
-    - 9000
+   - vol-minio1:/export
+  ports:
+   - "9001:9000"
   networks:
    - minio_distributed
   env_file: .env
@@ -21,11 +21,11 @@ services:
       constraints:
        - node.labels.arch == arm
  minio2:
-  image: pixelchrome/minio-arm
+  image: docker pull pixelchrome/minio-arm
   volumes:
-   - bluxomous-minio2:/export
-  expose:
-    - 9000
+   - vol-minio2:/export
+  ports:
+   - "9002:9000"
   networks:
    - minio_distributed
   env_file: .env
@@ -40,11 +40,11 @@ services:
       constraints:
        - node.labels.arch == arm
  minio3:
-  image: pixelchrome/minio-arm
+  image: docker pull pixelchrome/minio-arm
   volumes:
-   - bluxomous-minio3:/export
-  expose:
-    - 9000
+   - vol-minio3:/export
+  ports:
+   - "9003:9000"
   networks:
    - minio_distributed
   env_file: .env
@@ -59,11 +59,11 @@ services:
       constraints:
        - node.labels.arch == arm
  minio4:
-  image: pixelchrome/minio-arm
+  image: docker pull pixelchrome/minio-arm
   volumes:
-   - bluxomous-minio4:/export
-  expose:
-    - 9000
+   - vol-minio4:/export
+  ports:
+   - "9004:9000"
   networks:
    - minio_distributed
   env_file: .env
@@ -78,14 +78,11 @@ services:
       constraints:
        - node.labels.arch == arm
 volumes:
-  bluxomous-minio1:
-  bluxomous-minio2:
-  bluxomous-minio3:
-  bluxomous-minio4:
+  vol-minio1:
+  vol-minio2:
+  vol-minio3:
+  vol-minio4:
 
 networks:
  minio_distributed:
   driver: overlay
- default:
-   external:
-     name: nginx-proxy
