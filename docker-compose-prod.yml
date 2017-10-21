@@ -6,8 +6,6 @@ services:
   volumes:
    # - minio1-data:/export
    - /mnt/minio/prod:/export
-  expose:
-   - 9000
   networks:
    - minio_distributed
   env_file: .env
@@ -26,8 +24,6 @@ services:
   volumes:
    # - minio2-data:/export
    - /mnt/minio/prod:/export
-  expose:
-   - 9000
   networks:
    - minio_distributed
   env_file: .env
@@ -46,8 +42,6 @@ services:
   volumes:
    # - minio3-data:/export
    - /mnt/minio/prod:/export
-  expose:
-   - 9000
   networks:
    - minio_distributed
   env_file: .env
@@ -66,8 +60,6 @@ services:
   volumes:
    # - minio4-data:/export
    - /mnt/minio/prod:/export
-  expose:
-   - 9000
   networks:
    - minio_distributed
   env_file: .env
