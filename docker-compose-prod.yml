@@ -11,8 +11,8 @@ services:
   expose:
    - 9000
   networks:
-   # - minio_distributed
-   - ntw_minio
+   - minio_distributed
+   # - ntw_minio
   env_file: .env
   deploy:
    restart_policy:
@@ -34,8 +34,8 @@ services:
   expose:
    - 9000
   networks:
-   # - minio_distributed
-   - ntw_minio
+   - minio_distributed
+   # - ntw_minio
   env_file: .env
   deploy:
    restart_policy:
@@ -57,8 +57,8 @@ services:
   expose:
    - 9000
   networks:
-   # - minio_distributed
-   - ntw_minio
+   - minio_distributed
+   # - ntw_minio
   env_file: .env
   deploy:
    restart_policy:
@@ -80,8 +80,8 @@ services:
   expose:
    - 9000
   networks:
-   # - minio_distributed
-   - ntw_minio
+   - minio_distributed
+   # - ntw_minio
   env_file: .env
   deploy:
    restart_policy:
@@ -99,9 +99,9 @@ volumes:
   vol-minio3:
   vol-minio4:
 
-# networks:
-  # minio_distributed:
-    # driver: overlay
+networks:
+  minio_distributed:
+    driver: overlay
   # default:
   #   external:
   #     name: nginx-proxy
