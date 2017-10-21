@@ -82,5 +82,5 @@ volumes:
 networks:
   default:
     external:
-      minio_distributed:
+      name: minio_distributed
         driver: overlay
