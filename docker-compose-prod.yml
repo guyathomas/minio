@@ -7,6 +7,8 @@ services:
    - vol-minio1:/export
   ports:
    - "9001:9000"
+  expose:
+   - 9000
   networks:
    - minio_distributed
   env_file: .env
@@ -26,6 +28,8 @@ services:
    - vol-minio2:/export
   ports:
    - "9002:9000"
+  expose:
+   - 9000
   networks:
    - minio_distributed
   env_file: .env
@@ -45,6 +49,8 @@ services:
    - vol-minio3:/export
   ports:
    - "9003:9000"
+  expose:
+   - 9000
   networks:
    - minio_distributed
   env_file: .env
@@ -64,6 +70,8 @@ services:
    - vol-minio4:/export
   ports:
    - "9004:9000"
+  expose:
+   - 9000
   networks:
    - minio_distributed
   env_file: .env

@@ -5,8 +5,8 @@ services:
   image: docker pull pixelchrome/minio-arm
   volumes:
    - vol-minio1:/export
-  ports:
-   - "9001:9000"
+  expose:
+   - 9000
   networks:
    - minio_distributed
   env_file: .env
