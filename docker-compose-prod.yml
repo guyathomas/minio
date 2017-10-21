@@ -88,9 +88,8 @@ services:
 #   minio4-data:
 
 networks:
-  external:
-    minio_distributed:
-      driver: overlay
   default:
     external:
       name: nginx-proxy
+      name: minio_distributed
+        driver: overlay
