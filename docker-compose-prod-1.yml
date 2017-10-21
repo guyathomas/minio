@@ -19,7 +19,7 @@ services:
   deploy:
     placement:
       constraints:
-       - node.labels.arch == arm
+       - node.hostname == node1
 volumes:
   vol-minio1:
 

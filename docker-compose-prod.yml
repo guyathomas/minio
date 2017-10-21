@@ -21,7 +21,7 @@ services:
   deploy:
     placement:
       constraints:
-       - node.labels.arch == arm
+       - node.hostname == node1
  minio2:
   image: pixelchrome/minio-arm
   volumes:
@@ -42,7 +42,7 @@ services:
   deploy:
     placement:
       constraints:
-       - node.labels.arch == arm
+       - node.hostname == node2
  minio3:
   image: pixelchrome/minio-arm
   volumes:
@@ -63,7 +63,7 @@ services:
   deploy:
     placement:
       constraints:
-       - node.labels.arch == arm
+       - node.hostname == node3
  minio4:
   image: pixelchrome/minio-arm
   volumes:
@@ -84,7 +84,7 @@ services:
   deploy:
     placement:
       constraints:
-       - node.labels.arch == arm
+       - node.hostname == node3
 volumes:
   vol-minio1:
   vol-minio2:
@@ -94,6 +94,6 @@ volumes:
 networks:
   minio_distributed:
     driver: overlay
-  default:
-    external:
-      name: nginx-proxy
+  # default:
+  #   external:
+  #     name: nginx-proxy
