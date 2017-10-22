@@ -3,6 +3,10 @@ version: '3'
 services:
   minio-nginx:
     image: stolemyusername/minio-nginx:arm
+    environment:
+      VIRTUAL_HOST: s3.bluxomous.com
+      LETSENCRYPT_HOST: s3.bluxomous.com
+      LETSENCRYPT_EMAIL: guythomas721@gmail.com
     deploy:
       placement:
         constraints:
@@ -13,14 +17,9 @@ services:
       - minio3
       - minio4
     networks:
-      - net
       - engauge
+      - nginx-proxy
       - minio-distributed
-  labels:
-    - "traefik.docker.network=net"
-    - "traefik.port=80"
-    - "traefik.frontend.rule=Host:s3.bluxomous.com,s3.localhost"
-    - "traefik.backend.loadbalancer.sticky=true"
   minio1:
     image: pixelchrome/minio-arm
     volumes:
@@ -102,7 +101,7 @@ volumes:
 networks:
   minio-distributed:
     external: true
-  net:
+  nginx-proxy:
     external: true
   engauge:
     external: true
