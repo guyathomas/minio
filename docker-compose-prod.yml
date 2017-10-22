@@ -1,13 +1,21 @@
 version: '3'
 
 services:
+ minio-nginx:
+  image: stolemyusername/minio-nginx:arm
+  depends_on:
+   - 'minio1'
+   - 'minio2'
+   - 'minio3'
+   - 'minio4'
+  environment:
+   VIRTUAL_HOST: s3.bluxomous.com
+   LETSENCRYPT_HOST: s3.bluxomous.com
+   LETSENCRYPT_EMAIL: guythomas721@gmail.com
  minio1:
   image: pixelchrome/minio-arm
   volumes:
    - minio1-data:/export
-   # - /mnt/minio/prod:/export
-  # networks:
-  #  - minio_distributed
   env_file: .env
   deploy:
    restart_policy:
@@ -23,9 +31,6 @@ services:
   image: pixelchrome/minio-arm
   volumes:
    - minio2-data:/export
-   # - /mnt/minio/prod:/export
-  # networks:
-  #  - minio_distributed
   env_file: .env
   deploy:
    restart_policy:
@@ -41,9 +46,6 @@ services:
   image: pixelchrome/minio-arm
   volumes:
    - minio3-data:/export
-   # - /mnt/minio/prod:/export
-  # networks:
-  #  - minio_distributed
   env_file: .env
   deploy:
    restart_policy:
@@ -59,9 +61,6 @@ services:
   image: pixelchrome/minio-arm
   volumes:
    - minio4-data:/export
-   # - /mnt/minio/prod:/export
-  # networks:
-  #  - minio_distributed
   env_file: .env
   deploy:
    restart_policy:
@@ -83,3 +82,4 @@ networks:
   default:
     external:
       name: minio-distributed
+      name: nginx-proxy

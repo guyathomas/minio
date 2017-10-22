@@ -1,0 +1,41 @@
+# Set up notification options
+notifications: 
+  email:
+    recipients:
+      - guythomas721@gmail.com
+
+    # change is when the repo status goes from pass to fail or vice versa
+    on_success: change
+    on_failure: always
+
+# specify language
+language: python
+python:
+  - "2.7"
+
+# configure which branches to run
+branches:
+  # whitelist
+  only:
+    - master
+    - /^deploy-.*$/ # regex ok
+  except:
+    - test 
+
+# declare your environment variables
+
+sudo: required
+# enable services (stuff like DBs, MQs)
+services:
+  - docker
+
+before_install:
+  - sudo apt-get update -qq
+  - pip install awscli
+  - docker run --rm --privileged multiarch/qemu-user-static:register
+  - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+
+install:
+  #Push new ngnix proxy
+  - docker build --rm=false -f ./nginx/Dockerfile-arm -t stolemyusername/minio-nginx:arm ./nginx
+  - docker push stolemyusername/minio-nginx
