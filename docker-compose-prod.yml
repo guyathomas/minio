@@ -3,11 +3,11 @@ version: '3'
 services:
  minio-nginx:
   image: stolemyusername/minio-nginx:arm
-  depends_on:
-   - 'minio1'
-   - 'minio2'
-   - 'minio3'
-   - 'minio4'
+  # depends_on:
+  #  - 'minio1'
+  #  - 'minio2'
+  #  - 'minio3'
+  #  - 'minio4'
   environment:
    VIRTUAL_HOST: s3.bluxomous.com
    LETSENCRYPT_HOST: s3.bluxomous.com
@@ -16,71 +16,71 @@ services:
     placement:
       constraints:
        - node.hostname == node1
- minio1:
-  image: pixelchrome/minio-arm
-  volumes:
-   - minio1-data:/export
-  env_file: .env
-  deploy:
-   restart_policy:
-    delay: 10s
-    max_attempts: 10
-    window: 60s
-  command: server http://minio1/export http://minio2/export http://minio3/export http://minio4/export 
-  deploy:
-    placement:
-      constraints:
-       - node.hostname == node1
- minio2:
-  image: pixelchrome/minio-arm
-  volumes:
-   - minio2-data:/export
-  env_file: .env
-  deploy:
-   restart_policy:
-    delay: 10s
-    max_attempts: 10
-    window: 60s
-  command: server http://minio1/export http://minio2/export http://minio3/export http://minio4/export 
-  deploy:
-    placement:
-      constraints:
-       - node.hostname == node2
- minio3:
-  image: pixelchrome/minio-arm
-  volumes:
-   - minio3-data:/export
-  env_file: .env
-  deploy:
-   restart_policy:
-    delay: 10s
-    max_attempts: 10
-    window: 60s
-  command: server http://minio1/export http://minio2/export http://minio3/export http://minio4/export 
-  deploy:
-    placement:
-      constraints:
-       - node.hostname == node3
- minio4:
-  image: pixelchrome/minio-arm
-  volumes:
-   - minio4-data:/export
-  env_file: .env
-  deploy:
-   restart_policy:
-    delay: 10s
-    max_attempts: 10
-    window: 60s
-  command: server http://minio1/export http://minio2/export http://minio3/export http://minio4/export 
-  deploy:
-    placement:
-      constraints:
-       - node.hostname == node3
-volumes:
-  minio1-data:
-  minio2-data:
-  minio3-data:
-  minio4-data:
+#  minio1:
+#   image: pixelchrome/minio-arm
+#   volumes:
+#    - minio1-data:/export
+#   env_file: .env
+#   deploy:
+#    restart_policy:
+#     delay: 10s
+#     max_attempts: 10
+#     window: 60s
+#   command: server http://minio1/export http://minio2/export http://minio3/export http://minio4/export 
+#   deploy:
+#     placement:
+#       constraints:
+#        - node.hostname == node1
+#  minio2:
+#   image: pixelchrome/minio-arm
+#   volumes:
+#    - minio2-data:/export
+#   env_file: .env
+#   deploy:
+#    restart_policy:
+#     delay: 10s
+#     max_attempts: 10
+#     window: 60s
+#   command: server http://minio1/export http://minio2/export http://minio3/export http://minio4/export 
+#   deploy:
+#     placement:
+#       constraints:
+#        - node.hostname == node2
+#  minio3:
+#   image: pixelchrome/minio-arm
+#   volumes:
+#    - minio3-data:/export
+#   env_file: .env
+#   deploy:
+#    restart_policy:
+#     delay: 10s
+#     max_attempts: 10
+#     window: 60s
+#   command: server http://minio1/export http://minio2/export http://minio3/export http://minio4/export 
+#   deploy:
+#     placement:
+#       constraints:
+#        - node.hostname == node3
+#  minio4:
+#   image: pixelchrome/minio-arm
+#   volumes:
+#    - minio4-data:/export
+#   env_file: .env
+#   deploy:
+#    restart_policy:
+#     delay: 10s
+#     max_attempts: 10
+#     window: 60s
+#   command: server http://minio1/export http://minio2/export http://minio3/export http://minio4/export 
+#   deploy:
+#     placement:
+#       constraints:
+#        - node.hostname == node3
+# volumes:
+#   minio1-data:
+#   minio2-data:
+#   minio3-data:
+#   minio4-data:
 
 networks:
   default:
