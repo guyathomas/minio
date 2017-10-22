@@ -92,3 +92,5 @@ networks:
       name: minio-distributed
     external:
       name: nginx-proxy
+    external:
+      name: engauge
