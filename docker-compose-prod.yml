@@ -3,8 +3,6 @@ version: '3'
 services:
   minio-nginx:
     image: stolemyusername/minio-nginx:arm
-    ports:
-      - "9002:9000"
     environment:
       VIRTUAL_HOST: s3.bluxomous.com
       LETSENCRYPT_HOST: s3.bluxomous.com
