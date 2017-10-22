@@ -10,7 +10,7 @@ services:
     deploy:
       placement:
         constraints:
-         - node.hostname == master
+         - node.labels.arch == arm
     depends_on:
       - minio1
       - minio2
