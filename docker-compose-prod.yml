@@ -90,4 +90,5 @@ networks:
   default:
     external:
       name: minio-distributed
+    external:
       name: nginx-proxy
