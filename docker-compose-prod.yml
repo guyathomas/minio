@@ -33,9 +33,9 @@ services:
     command: server http://minio1/export http://minio2/export http://minio3/export http://minio4/export 
     deploy:
       restart_policy:
-      delay: 10s
-      max_attempts: 10
-      window: 60s
+        delay: 10s
+        max_attempts: 10
+        window: 60s
       placement:
         constraints:
           - node.hostname == node2
@@ -47,9 +47,9 @@ services:
     command: server http://minio1/export http://minio2/export http://minio3/export http://minio4/export 
     deploy:
       restart_policy:
-      delay: 10s
-      max_attempts: 10
-      window: 60s
+        delay: 10s
+        max_attempts: 10
+        window: 60s
       placement:
         constraints:
           - node.hostname == node3
@@ -61,9 +61,9 @@ services:
   command: server http://minio1/export http://minio2/export http://minio3/export http://minio4/export 
   deploy:
     restart_policy:
-    delay: 10s
-    max_attempts: 10
-    window: 60s
+      delay: 10s
+      max_attempts: 10
+      window: 60s
     placement:
       constraints:
         - node.hostname == node3
