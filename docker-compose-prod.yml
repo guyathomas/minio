@@ -13,11 +13,11 @@ services:
       - minio3
       - minio4
     networks:
-      - net
+      - traefik-net
       - engauge
       - minio-distributed
     labels:
-      - "traefik.docker.network=net"
+      - "traefik.docker.network=traefik-net"
       - "traefik.frontend.rule=Host:s3.bluxomous.com"
       - "traefik.backend.loadbalancer.sticky=true"
   minio1:
@@ -93,7 +93,7 @@ volumes:
 networks:
   minio-distributed:
     external: true
-  net:
+  traefik-net:
     external: true
   engauge:
     external: true
