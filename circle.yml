@@ -1,0 +1,18 @@
+machine:
+  python:
+    version: 2.7.3
+  services:
+    - docker
+
+dependencies:
+  pre:
+    - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+    - docker build --rm=false -t stolemyusername/minio-nginx:latest ./nginx
+    - docker push stolemyusername/minio-nginx
+test:
+  override:
+    - echo "test"
+
+deployment:
+  elasticbeanstalk:
+    branch: master
