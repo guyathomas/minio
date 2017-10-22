@@ -21,7 +21,6 @@ services:
     networks:
       - engauge
       - nginx-proxy
-      - minio-distributed
   minio1:
     image: pixelchrome/minio-arm
     volumes:
@@ -93,10 +92,10 @@ volumes:
   minio4-data:
 
 networks:
+  default:
+    external:
+      name: minio-distributed
   nginx-proxy:
     external: true
   engauge:
     external: true
-  default:
-    external:
-      name: minio-distributed
