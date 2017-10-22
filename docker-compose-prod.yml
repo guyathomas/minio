@@ -18,15 +18,13 @@ services:
       - minio-distributed
     labels:
       - "traefik.docker.network=net"
-      - "traefik.frontend.rule=Host:s3.bluxomous.com,s3.localhost"
+      - "traefik.frontend.rule=Host:s3.bluxomous.com"
       - "traefik.backend.loadbalancer.sticky=true"
   minio1:
     image: pixelchrome/minio-arm
     volumes:
       - minio1-data:/export
     env_file: .env
-    ports:
-      - "9001:9000"
     command: server http://minio1/export http://minio2/export http://minio3/export http://minio4/export 
     deploy:
       restart_policy:
@@ -43,8 +41,6 @@ services:
     volumes:
       - minio2-data:/export
     env_file: .env
-    ports:
-      - "9002:9000"
     command: server http://minio1/export http://minio2/export http://minio3/export http://minio4/export 
     deploy:
       restart_policy:
@@ -61,8 +57,6 @@ services:
     volumes:
       - minio3-data:/export
     env_file: .env
-    ports:
-      - "9003:9000"
     command: server http://minio1/export http://minio2/export http://minio3/export http://minio4/export 
     deploy:
       restart_policy:
@@ -79,8 +73,6 @@ services:
     volumes:
       - minio4-data:/export
     env_file: .env
-    ports:
-      - "9004:9000"
     command: server http://minio1/export http://minio2/export http://minio3/export http://minio4/export 
     deploy:
       restart_policy:
