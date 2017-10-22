@@ -11,6 +11,11 @@ services:
       placement:
         constraints:
          - node.hostname == node1
+    depends_on:
+      - minio1
+      - minio2
+      - minio3
+      - minio4
   minio1:
     image: pixelchrome/minio-arm
     volumes:
