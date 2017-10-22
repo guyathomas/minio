@@ -3,8 +3,6 @@ version: '3'
 services:
   minio-nginx:
     image: stolemyusername/minio-nginx:arm
-    expose:
-      - 80
     environment:
       VIRTUAL_HOST: s3.bluxomous.com
       LETSENCRYPT_HOST: s3.bluxomous.com
@@ -18,6 +16,8 @@ services:
     volumes:
       - minio1-data:/export
     env_file: .env
+    ports:
+      - "9001:9000"
     command: server http://minio1/export http://minio2/export http://minio3/export http://minio4/export 
     deploy:
       restart_policy:
@@ -32,6 +32,8 @@ services:
     volumes:
       - minio2-data:/export
     env_file: .env
+    ports:
+      - "9002:9000"
     command: server http://minio1/export http://minio2/export http://minio3/export http://minio4/export 
     deploy:
       restart_policy:
@@ -46,6 +48,8 @@ services:
     volumes:
       - minio3-data:/export
     env_file: .env
+    ports:
+      - "9003:9000"
     command: server http://minio1/export http://minio2/export http://minio3/export http://minio4/export 
     deploy:
       restart_policy:
@@ -60,6 +64,8 @@ services:
     volumes:
       - minio4-data:/export
     env_file: .env
+    ports:
+      - "9004:9000"
     command: server http://minio1/export http://minio2/export http://minio3/export http://minio4/export 
     deploy:
       restart_policy:
