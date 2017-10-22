@@ -11,11 +11,6 @@ services:
   placement:
     constraints:
       - node.labels.arch == arm
- depends_on:
-   - 'minio1'
-   - 'minio2'
-   - 'minio3'
-   - 'minio4'
  environment:
    VIRTUAL_HOST: s3.bluxomous.com
    LETSENCRYPT_HOST: s3.bluxomous.com
