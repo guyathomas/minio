@@ -18,7 +18,6 @@ services:
       - minio-distributed
     labels:
       - "traefik.docker.network=net"
-      - "traefik.port=80"
       - "traefik.frontend.rule=Host:s3.bluxomous.com,s3.localhost"
       - "traefik.backend.loadbalancer.sticky=true"
   minio1:
