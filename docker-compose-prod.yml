@@ -4,6 +4,10 @@ services:
   minio-nginx:
     image: stolemyusername/minio-nginx:arm
     deploy:
+      labels:
+        - "traefik.docker.network=traefik-net"
+        - "traefik.frontend.rule=Host:s3.bluxomous.com"
+        - "traefik.backend.loadbalancer.sticky=true"
       placement:
         constraints:
          - node.labels.arch == arm
@@ -16,10 +20,6 @@ services:
       - traefik-net
       - engauge
       - minio-distributed
-    labels:
-      - "traefik.docker.network=traefik-net"
-      - "traefik.frontend.rule=Host:s3.bluxomous.com"
-      - "traefik.backend.loadbalancer.sticky=true"
   minio1:
     image: pixelchrome/minio-arm
     volumes:
