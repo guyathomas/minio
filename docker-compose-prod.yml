@@ -54,19 +54,19 @@ services:
         constraints:
           - node.hostname == node3
   minio4:
-  image: pixelchrome/minio-arm
-  volumes:
-    - minio4-data:/export
-  env_file: .env
-  command: server http://minio1/export http://minio2/export http://minio3/export http://minio4/export 
-  deploy:
-    restart_policy:
-      delay: 10s
-      max_attempts: 10
-      window: 60s
-    placement:
-      constraints:
-        - node.hostname == node3
+    image: pixelchrome/minio-arm
+    volumes:
+      - minio4-data:/export
+    env_file: .env
+    command: server http://minio1/export http://minio2/export http://minio3/export http://minio4/export 
+    deploy:
+      restart_policy:
+        delay: 10s
+        max_attempts: 10
+        window: 60s
+      placement:
+        constraints:
+          - node.hostname == node3
   volumes:
     minio1-data:
     minio2-data:
