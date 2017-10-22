@@ -21,6 +21,7 @@ services:
     networks:
       - engauge
       - nginx-proxy
+      - minio-distributed
   minio1:
     image: pixelchrome/minio-arm
     volumes:
@@ -37,6 +38,8 @@ services:
       placement:
         constraints:
           - node.hostname == node1
+    networks:
+      - minio-distributed
   minio2:
     image: pixelchrome/minio-arm
     volumes:
@@ -53,6 +56,8 @@ services:
       placement:
         constraints:
           - node.hostname == node2
+    networks:
+      - minio-distributed
   minio3:
     image: pixelchrome/minio-arm
     volumes:
@@ -69,6 +74,8 @@ services:
       placement:
         constraints:
           - node.hostname == node3
+    networks:
+      - minio-distributed
   minio4:
     image: pixelchrome/minio-arm
     volumes:
@@ -85,6 +92,8 @@ services:
       placement:
         constraints:
           - node.hostname == node3
+    networks:
+      - minio-distributed
 volumes:
   minio1-data:
   minio2-data:
@@ -92,9 +101,8 @@ volumes:
   minio4-data:
 
 networks:
-  default:
-    external:
-      name: minio-distributed
+  minio-distributed:
+    external: true
   nginx-proxy:
     external: true
   engauge:
