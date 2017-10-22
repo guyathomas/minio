@@ -7,10 +7,10 @@ services:
       VIRTUAL_HOST: s3.bluxomous.com
       LETSENCRYPT_HOST: s3.bluxomous.com
       LETSENCRYPT_EMAIL: guythomas721@gmail.com
-    deploy:
-      placement:
-        constraints:
-         - node.hostname == node1
+    # deploy:
+    #   placement:
+    #     constraints:
+    #      - node.hostname == node1
     depends_on:
       - minio1
       - minio2
