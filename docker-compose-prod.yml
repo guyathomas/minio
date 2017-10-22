@@ -67,14 +67,14 @@ services:
       placement:
         constraints:
           - node.hostname == node3
-  volumes:
-    minio1-data:
-    minio2-data:
-    minio3-data:
-    minio4-data:
+volumes:
+  minio1-data:
+  minio2-data:
+  minio3-data:
+  minio4-data:
 
-  networks:
-    default:
-      external:
-        name: minio-distributed
-        name: nginx-proxy
+networks:
+  default:
+    external:
+      name: minio-distributed
+      name: nginx-proxy
