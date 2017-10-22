@@ -56,7 +56,7 @@ services:
   minio4:
   image: pixelchrome/minio-arm
   volumes:
-  - minio4-data:/export
+    - minio4-data:/export
   env_file: .env
   command: server http://minio1/export http://minio2/export http://minio3/export http://minio4/export 
   deploy:
