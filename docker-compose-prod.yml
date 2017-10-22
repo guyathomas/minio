@@ -12,11 +12,6 @@ services:
    VIRTUAL_HOST: s3.bluxomous.com
    LETSENCRYPT_HOST: s3.bluxomous.com
    LETSENCRYPT_EMAIL: guythomas721@gmail.com
-  volumes:
-   - minio1-data:/www/static
-   - minio2-data:/www/static
-   - minio3-data:/www/static
-   - minio4-data:/www/static
   deploy:
     placement:
       constraints:
