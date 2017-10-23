@@ -1,5 +1,3 @@
 FROM nginx:stable
 COPY ./default.conf /etc/nginx/conf.d/default.conf
-ENV PORT 80
-ENV PORT 433
 EXPOSE 80 443
