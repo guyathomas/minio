@@ -2,17 +2,9 @@ version: '3'
 
 services:
   minio-nginx:
-    image: stolemyusername/minio-nginx:arm
-    deploy:
-      labels:
-        - "traefik.frontend.entryPoints=http,https"
-        - "traefik.port=80"
-        - "traefik.docker.network=traefik-net"
-        - "traefik.frontend.rule=Host:s3.bluxomous.com"
-        - "traefik.enable=true"
-      placement:
-        constraints:
-         - node.labels.arch == arm
+    image: stolemyusername/minio-nginx:latest
+    expose:
+      - 80
     depends_on:
       - minio1
       - minio2
@@ -28,14 +20,6 @@ services:
       - minio1-data:/export
     env_file: .env
     command: server http://minio1/export http://minio2/export http://minio3/export http://minio4/export 
-    deploy:
-      restart_policy:
-        delay: 10s
-        max_attempts: 10
-        window: 60s
-      placement:
-        constraints:
-          - node.hostname == node1
     networks:
       - minio-distributed
   minio2:
@@ -44,14 +28,6 @@ services:
       - minio2-data:/export
     env_file: .env
     command: server http://minio1/export http://minio2/export http://minio3/export http://minio4/export 
-    deploy:
-      restart_policy:
-        delay: 10s
-        max_attempts: 10
-        window: 60s
-      placement:
-        constraints:
-          - node.hostname == node2
     networks:
       - minio-distributed
   minio3:
@@ -60,14 +36,6 @@ services:
       - minio3-data:/export
     env_file: .env
     command: server http://minio1/export http://minio2/export http://minio3/export http://minio4/export 
-    deploy:
-      restart_policy:
-        delay: 10s
-        max_attempts: 10
-        window: 60s
-      placement:
-        constraints:
-          - node.hostname == node3
     networks:
       - minio-distributed
   minio4:
@@ -76,14 +44,6 @@ services:
       - minio4-data:/export
     env_file: .env
     command: server http://minio1/export http://minio2/export http://minio3/export http://minio4/export 
-    deploy:
-      restart_policy:
-        delay: 10s
-        max_attempts: 10
-        window: 60s
-      placement:
-        constraints:
-          - node.hostname == node3
     networks:
       - minio-distributed
 volumes:

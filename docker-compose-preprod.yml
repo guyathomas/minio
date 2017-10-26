@@ -2,7 +2,7 @@ version: '3'
 
 services:
   minio-nginx:
-    image: stolemyusername/minio-nginx:arm
+    image: stolemyusername/minio-nginx:latest
     deploy:
       labels:
         - "traefik.frontend.entryPoints=http,https"
@@ -12,7 +12,7 @@ services:
         - "traefik.enable=true"
       placement:
         constraints:
-         - node.labels.arch == arm
+         - node.role == manager
     depends_on:
       - minio1
       - minio2
@@ -23,7 +23,7 @@ services:
       - engauge
       - minio-distributed
   minio1:
-    image: pixelchrome/minio-arm
+    image: minio/minio
     volumes:
       - minio1-data:/export
     env_file: .env
@@ -35,11 +35,11 @@ services:
         window: 60s
       placement:
         constraints:
-          - node.hostname == node1
+          - node.role == manager
     networks:
       - minio-distributed
   minio2:
-    image: pixelchrome/minio-arm
+    image: minio/minio
     volumes:
       - minio2-data:/export
     env_file: .env
@@ -51,11 +51,11 @@ services:
         window: 60s
       placement:
         constraints:
-          - node.hostname == node2
+          - node.role == manager
     networks:
       - minio-distributed
   minio3:
-    image: pixelchrome/minio-arm
+    image: minio/minio
     volumes:
       - minio3-data:/export
     env_file: .env
@@ -67,11 +67,11 @@ services:
         window: 60s
       placement:
         constraints:
-          - node.hostname == node3
+          - node.role == manager
     networks:
       - minio-distributed
   minio4:
-    image: pixelchrome/minio-arm
+    image: minio/minio
     volumes:
       - minio4-data:/export
     env_file: .env
@@ -83,7 +83,7 @@ services:
         window: 60s
       placement:
         constraints:
-          - node.hostname == node3
+          - node.role == manager
     networks:
       - minio-distributed
 volumes:
