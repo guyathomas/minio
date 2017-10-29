@@ -3,6 +3,8 @@ version: '3'
 services:
   minio-nginx:
     image: stolemyusername/minio-nginx:arm
+    ports:
+      - "81:80"
     deploy:
       labels:
         - "traefik.frontend.entryPoints=http,https"
