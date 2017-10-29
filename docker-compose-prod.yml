@@ -26,6 +26,8 @@ services:
       - minio-distributed
   minio1:
     image: pixelchrome/minio-arm
+    ports:
+      - "8001:8000"
     volumes:
       - minio1-data:/export
     env_file: .env
