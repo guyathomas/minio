@@ -2,7 +2,7 @@ version: '3'
 
 services:
   minio-nginx:
-    image: stolemyusername/minio-nginx:arm
+    image: stolemyusername/minio-nginx:latest
     ports:
       - "81:80"
     deploy:
@@ -14,7 +14,7 @@ services:
         - "traefik.enable=true"
       placement:
         constraints:
-         - node.labels.arch == arm
+         - node.labels.arch == x86
     depends_on:
       - minio1
       - minio2
@@ -24,6 +24,8 @@ services:
       - traefik-net
       - engauge
       - minio-distributed
+    volumes:
+      - minio-data:/usr/share/nginx/html:ro
   minio1:
     image: pixelchrome/minio-arm
     volumes:
@@ -93,6 +95,14 @@ volumes:
   minio2-data:
   minio3-data:
   minio4-data:
+  minio-data:
+    driver: minio/minfs
+    driver_opts:
+      endpoint: http://192.168.1.100
+      access-key: 4WS930B0PX42TKW1K0O5
+      secret-key: ftXM0qt3hDZy9ipf2KNaAbcbgaYvelPME5OFaBp
+      bucket: engauge
+      opts: cache=/tmp/minio-data
 
 networks:
   minio-distributed:
