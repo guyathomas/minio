@@ -7,7 +7,7 @@ machine:
 dependencies:
   pre:
     - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
-    - docker build --rm=false -t stolemyusername/minio-nginx:server_name ./nginx
+    - docker build --rm=false -t stolemyusername/minio-nginx:latest ./nginx
     - docker push stolemyusername/minio-nginx
 test:
   override:
