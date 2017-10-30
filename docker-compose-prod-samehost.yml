@@ -26,6 +26,8 @@ services:
     image: pixelchrome/minio-arm
     volumes:
       - minio-data:/export
+    ports:
+      - "9001:9000"
     env_file: .env
     command: server http://minio1/export http://minio2/export http://minio3/export http://minio4/export 
     deploy:
@@ -40,6 +42,8 @@ services:
       - minio-distributed
   minio2:
     image: pixelchrome/minio-arm
+    ports:
+      - "9002:9000"
     volumes:
       - minio-data:/export
     env_file: .env
@@ -56,6 +60,8 @@ services:
       - minio-distributed
   minio3:
     image: pixelchrome/minio-arm
+    ports:
+      - "9003:9000"
     volumes:
       - minio-data:/export
     env_file: .env
@@ -72,6 +78,8 @@ services:
       - minio-distributed
   minio4:
     image: pixelchrome/minio-arm
+    ports:
+      - "9004:9000"
     volumes:
       - minio-data:/export
     env_file: .env
