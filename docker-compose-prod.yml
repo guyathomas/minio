@@ -98,7 +98,7 @@ services:
         max_attempts: 10
         window: 60s
       labels:
-        traefik.frontend.rule: "Host:minioproxy,minio.example.com"
+        traefik.frontend.rule: "Host:minioproxy"
         traefik.port: "9000"
     command: server http://minio1/export http://minio2/export http://minio3/export http://minio4/export
 
