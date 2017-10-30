@@ -27,9 +27,7 @@ services:
   minio1:
     image: pixelchrome/minio-arm
     volumes:
-      - minio-data-1:/export
-    ports:
-      - "9001:9000"
+      - minio1-data:/export
     env_file: .env
     command: server http://minio1/export http://minio2/export http://minio3/export http://minio4/export 
     deploy:
@@ -39,15 +37,13 @@ services:
         window: 60s
       placement:
         constraints:
-          - node.hostname == node3
+          - node.hostname == node1
     networks:
       - minio-distributed
   minio2:
     image: pixelchrome/minio-arm
-    ports:
-      - "9002:9000"
     volumes:
-      - minio-data-2:/export
+      - minio2-data:/export
     env_file: .env
     command: server http://minio1/export http://minio2/export http://minio3/export http://minio4/export 
     deploy:
@@ -57,15 +53,13 @@ services:
         window: 60s
       placement:
         constraints:
-          - node.hostname == node3
+          - node.hostname == node2
     networks:
       - minio-distributed
   minio3:
     image: pixelchrome/minio-arm
-    ports:
-      - "9003:9000"
     volumes:
-      - minio-data-3:/export
+      - minio3-data:/export
     env_file: .env
     command: server http://minio1/export http://minio2/export http://minio3/export http://minio4/export 
     deploy:
@@ -80,10 +74,8 @@ services:
       - minio-distributed
   minio4:
     image: pixelchrome/minio-arm
-    ports:
-      - "9004:9000"
     volumes:
-      - minio-data-4:/export
+      - minio4-data:/export
     env_file: .env
     command: server http://minio1/export http://minio2/export http://minio3/export http://minio4/export 
     deploy:
@@ -97,10 +89,11 @@ services:
     networks:
       - minio-distributed
 volumes:
-  minio-data-1:
-  minio-data-2:
-  minio-data-3:
-  minio-data-4:
+  minio1-data:
+  minio2-data:
+  minio3-data:
+  minio4-data:
+
 networks:
   minio-distributed:
     external: true
