@@ -3,8 +3,6 @@ version: '3'
 services:
   minio-nginx:
     image: stolemyusername/minio-nginx:arm
-    ports:
-      - "81:80"
     deploy:
       labels:
         - "traefik.frontend.entryPoints=http,https"
@@ -26,10 +24,8 @@ services:
       - minio-distributed
   minio1:
     image: pixelchrome/minio-arm
-    ports:
-      - "9001:9000"
     volumes:
-      - minio1-data:/export
+      - ./data:/export
     env_file: .env
     command: server http://minio1/export http://minio2/export http://minio3/export http://minio4/export 
     deploy:
@@ -44,10 +40,8 @@ services:
       - minio-distributed
   minio2:
     image: pixelchrome/minio-arm
-    ports:
-      - "9002:9000"
     volumes:
-      - minio2-data:/export
+      - ./data:/export
     env_file: .env
     command: server http://minio1/export http://minio2/export http://minio3/export http://minio4/export 
     deploy:
@@ -62,10 +56,8 @@ services:
       - minio-distributed
   minio3:
     image: pixelchrome/minio-arm
-    ports:
-      - "9003:9000"
     volumes:
-      - minio3-data:/export
+      - ./data:/export
     env_file: .env
     command: server http://minio1/export http://minio2/export http://minio3/export http://minio4/export 
     deploy:
@@ -80,10 +72,8 @@ services:
       - minio-distributed
   minio4:
     image: pixelchrome/minio-arm
-    ports:
-      - "9004:9000"
     volumes:
-      - minio4-data:/export
+      - ./data:/export
     env_file: .env
     command: server http://minio1/export http://minio2/export http://minio3/export http://minio4/export 
     deploy:
