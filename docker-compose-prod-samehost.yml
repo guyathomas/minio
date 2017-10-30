@@ -1,0 +1,111 @@
+version: '3'
+
+services:
+  minio-nginx:
+    image: stolemyusername/minio-nginx:arm
+    ports:
+      - "81:80"
+    deploy:
+      labels:
+        - "traefik.frontend.entryPoints=http,https"
+        - "traefik.port=80"
+        - "traefik.docker.network=traefik-net"
+        - "traefik.frontend.rule=Host:s3.bluxomous.com"
+        - "traefik.enable=true"
+      placement:
+        constraints:
+         - node.labels.arch == arm
+    depends_on:
+      - minio1
+      - minio2
+      - minio3
+      - minio4
+    networks:
+      - traefik-net
+      - engauge
+      - minio-distributed
+  minio1:
+    image: pixelchrome/minio-arm
+    ports:
+      - "9001:9000"
+    volumes:
+      - minio1-data:/export
+    env_file: .env
+    command: server http://minio1/export http://minio2/export http://minio3/export http://minio4/export 
+    deploy:
+      restart_policy:
+        delay: 10s
+        max_attempts: 10
+        window: 60s
+      placement:
+        constraints:
+          - node.hostname == node3
+    networks:
+      - minio-distributed
+  minio2:
+    image: pixelchrome/minio-arm
+    ports:
+      - "9002:9000"
+    volumes:
+      - minio2-data:/export
+    env_file: .env
+    command: server http://minio1/export http://minio2/export http://minio3/export http://minio4/export 
+    deploy:
+      restart_policy:
+        delay: 10s
+        max_attempts: 10
+        window: 60s
+      placement:
+        constraints:
+          - node.hostname == node3
+    networks:
+      - minio-distributed
+  minio3:
+    image: pixelchrome/minio-arm
+    ports:
+      - "9003:9000"
+    volumes:
+      - minio3-data:/export
+    env_file: .env
+    command: server http://minio1/export http://minio2/export http://minio3/export http://minio4/export 
+    deploy:
+      restart_policy:
+        delay: 10s
+        max_attempts: 10
+        window: 60s
+      placement:
+        constraints:
+          - node.hostname == node3
+    networks:
+      - minio-distributed
+  minio4:
+    image: pixelchrome/minio-arm
+    ports:
+      - "9004:9000"
+    volumes:
+      - minio4-data:/export
+    env_file: .env
+    command: server http://minio1/export http://minio2/export http://minio3/export http://minio4/export 
+    deploy:
+      restart_policy:
+        delay: 10s
+        max_attempts: 10
+        window: 60s
+      placement:
+        constraints:
+          - node.hostname == node3
+    networks:
+      - minio-distributed
+volumes:
+  minio1-data:
+  minio2-data:
+  minio3-data:
+  minio4-data:
+
+networks:
+  minio-distributed:
+    external: true
+  traefik-net:
+    external: true
+  engauge:
+    external: true

@@ -1,108 +1,123 @@
 version: '3'
 
 services:
-  minio-nginx:
-    image: stolemyusername/minio-nginx:latest
+  minioproxy:
+    image: traefik
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      -  minio_distributed
     ports:
-      - "81:80"
+      - 81:80
     deploy:
+      placement:
+        constraints:
+         - node.labels.arch == x86
       labels:
         - "traefik.frontend.entryPoints=http,https"
         - "traefik.port=80"
         - "traefik.docker.network=traefik-net"
         - "traefik.frontend.rule=Host:s3.bluxomous.com"
         - "traefik.enable=true"
-      placement:
-        constraints:
-         - node.labels.arch == x86
-    depends_on:
-      - minio1
-      - minio2
-      - minio3
-      - minio4
     networks:
       - traefik-net
       - engauge
       - minio-distributed
-    volumes:
-      - minio-data:/usr/share/nginx/html:ro
+    command: --docker --docker.swarmmode --docker.domain=minio --docker.watch --web
   minio1:
-    image: pixelchrome/minio-arm
-    volumes:
-      - minio1-data:/export
-    env_file: .env
-    command: server http://minio1/export http://minio2/export http://minio3/export http://minio4/export 
-    deploy:
-      restart_policy:
-        delay: 10s
-        max_attempts: 10
-        window: 60s
-      placement:
-        constraints:
-          - node.hostname == node1
-    networks:
-      - minio-distributed
-  minio2:
-    image: pixelchrome/minio-arm
-    volumes:
-      - minio2-data:/export
-    env_file: .env
-    command: server http://minio1/export http://minio2/export http://minio3/export http://minio4/export 
-    deploy:
-      restart_policy:
-        delay: 10s
-        max_attempts: 10
-        window: 60s
-      placement:
-        constraints:
-          - node.hostname == node2
-    networks:
-      - minio-distributed
-  minio3:
-    image: pixelchrome/minio-arm
-    volumes:
-      - minio3-data:/export
-    env_file: .env
-    command: server http://minio1/export http://minio2/export http://minio3/export http://minio4/export 
-    deploy:
-      restart_policy:
-        delay: 10s
-        max_attempts: 10
-        window: 60s
-      placement:
-        constraints:
-          - node.hostname == node3
-    networks:
-      - minio-distributed
-  minio4:
-    image: pixelchrome/minio-arm
-    volumes:
-      - minio4-data:/export
-    env_file: .env
-    command: server http://minio1/export http://minio2/export http://minio3/export http://minio4/export 
-    deploy:
-      restart_policy:
-        delay: 10s
-        max_attempts: 10
-        window: 60s
-      placement:
-        constraints:
-          - node.hostname == node3
-    networks:
-      - minio-distributed
+    minio1:
+      image: pixelchrome/minio-arm
+      volumes:
+        - minio1-data:/export
+      networks:
+        - minio_distributed
+      deploy:
+        placement:
+          constraints:
+            - node.hostname == node3
+        restart_policy:
+          delay: 10s
+          max_attempts: 10
+          window: 60s
+        labels:
+          traefik.frontend.rule: "Host:minioproxy"
+          traefik.port: "9000"
+      command: server http://minio1/export http://minio2/export http://minio3/export http://minio4/export
+      secrets:
+        - secret_key
+        - access_key
+
+    minio2:
+      image: pixelchrome/minio-arm
+      volumes:
+        - minio2-data:/export
+      networks:
+        - minio_distributed
+      deploy:
+        placement:
+          constraints:
+            - node.hostname == node3
+        restart_policy:
+          delay: 10s
+          max_attempts: 10
+          window: 60s
+        labels:
+          traefik.frontend.rule: "Host:minioproxy"
+          traefik.port: "9000"
+      command: server http://minio1/export http://minio2/export http://minio3/export http://minio4/export
+      secrets:
+        - secret_key
+        - access_key
+
+    minio3:
+      image: pixelchrome/minio-arm
+      volumes:
+        - minio3-data:/export
+      networks:
+        - minio_distributed
+      deploy:
+        placement:
+          constraints:
+            - node.hostname == node3
+        restart_policy:
+          delay: 10s
+          max_attempts: 10
+          window: 60s
+        labels:
+          traefik.frontend.rule: "Host:minioproxy"
+          traefik.port: "9000"
+      command: server http://minio1/export http://minio2/export http://minio3/export http://minio4/export
+      secrets:
+        - secret_key
+        - access_key
+
+    minio4:
+      image: pixelchrome/minio-arm
+      volumes:
+        - minio4-data:/export
+      networks:
+        - minio_distributed
+      deploy:
+        placement:
+          constraints:
+            - node.hostname == node3
+        restart_policy:
+          delay: 10s
+          max_attempts: 10
+          window: 60s
+        labels:
+          traefik.frontend.rule: "Host:minioproxy,minio.example.com"
+          traefik.port: "9000"
+      command: server http://minio1/export http://minio2/export http://minio3/export http://minio4/export
+      secrets:
+        - secret_key
+        - access_key
+
 volumes:
   minio1-data:
   minio2-data:
   minio3-data:
   minio4-data:
-  minio-data:
-    driver: minio/minfs
-    driver_opts:
-      endpoint: http://192.168.1.100:9000
-      access-key: 4WS930B0PX42TKW1K0O5
-      secret-key: ftXM0qt3hDZy9ipf2KNaAbcbgaYvelPME5OFaBp
-      bucket: engauge
-      opts: cache=/tmp/minio-data
 
 networks:
   minio-distributed:
@@ -110,4 +125,10 @@ networks:
   traefik-net:
     external: true
   engauge:
+    external: true
+
+secrets:
+  secret_key:
+    external: true
+  access_key:
     external: true
