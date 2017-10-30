@@ -6,7 +6,7 @@ services:
     ports:
       - "81:80"
     deploy:
-      labels:
+      # labels:
         # - "traefik.frontend.entryPoints=http,https"
         # - "traefik.port=80"
         # - "traefik.docker.network=traefik-net"
