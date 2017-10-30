@@ -7,19 +7,14 @@ services:
       - "81:80"
     deploy:
       labels:
-        - "traefik.frontend.entryPoints=http,https"
-        - "traefik.port=80"
-        - "traefik.docker.network=traefik-net"
-        - "traefik.frontend.rule=Host:s3.bluxomous.com"
-        - "traefik.enable=true"
+        # - "traefik.frontend.entryPoints=http,https"
+        # - "traefik.port=80"
+        # - "traefik.docker.network=traefik-net"
+        # - "traefik.frontend.rule=Host:s3.bluxomous.com"
+        # - "traefik.enable=true"
       placement:
         constraints:
          - node.labels.arch == arm
-    depends_on:
-      - minio1
-      - minio2
-      - minio3
-      - minio4
     networks:
       - traefik-net
       - engauge
@@ -88,11 +83,11 @@ services:
           - node.hostname == node3
     networks:
       - minio-distributed
-volumes:
-  minio1-data:
-  minio2-data:
-  minio3-data:
-  minio4-data:
+# volumes:
+#   minio1-data:
+#   minio2-data:
+#   minio3-data:
+#   minio4-data:
 
 networks:
   minio-distributed:
