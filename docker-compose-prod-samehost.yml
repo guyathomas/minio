@@ -21,9 +21,9 @@ services:
       - minio-distributed
   minio1:
     image: pixelchrome/minio-arm
-    volumes:
-      - ./data:/export
     env_file: .env
+    volumes:
+      - /home/pirate/volumes/minio:/export
     command: server http://minio1/export http://minio2/export http://minio3/export http://minio4/export 
     deploy:
       restart_policy:
@@ -37,9 +37,9 @@ services:
       - minio-distributed
   minio2:
     image: pixelchrome/minio-arm
-    volumes:
-      - ./data:/export
     env_file: .env
+    volumes:
+      - /home/pirate/volumes/minio:/export
     command: server http://minio1/export http://minio2/export http://minio3/export http://minio4/export 
     deploy:
       restart_policy:
@@ -54,7 +54,7 @@ services:
   minio3:
     image: pixelchrome/minio-arm
     volumes:
-      - ./data:/export
+      - /home/pirate/volumes/minio:/export
     env_file: .env
     command: server http://minio1/export http://minio2/export http://minio3/export http://minio4/export 
     deploy:
@@ -70,7 +70,7 @@ services:
   minio4:
     image: pixelchrome/minio-arm
     volumes:
-      - ./data:/export
+      - /home/pirate/volumes/minio:/export
     env_file: .env
     command: server http://minio1/export http://minio2/export http://minio3/export http://minio4/export 
     deploy:
