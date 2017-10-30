@@ -3,7 +3,7 @@ version: '3'
 services:
   minio-nginx:
     image: stolemyusername/minio-nginx:arm
-    expose:
+    ports:
      - "80"
     deploy:
       labels:
@@ -27,7 +27,7 @@ services:
   minio1:
     image: pixelchrome/minio-arm
     volumes:
-      - minio1-data:/export
+      - minio1-vol:/export
     env_file: .env
     command: server http://minio1/export http://minio2/export http://minio3/export http://minio4/export 
     deploy:
@@ -43,7 +43,7 @@ services:
   minio2:
     image: pixelchrome/minio-arm
     volumes:
-      - minio2-data:/export
+      - minio2-vol:/export
     env_file: .env
     command: server http://minio1/export http://minio2/export http://minio3/export http://minio4/export 
     deploy:
@@ -59,7 +59,7 @@ services:
   minio3:
     image: pixelchrome/minio-arm
     volumes:
-      - minio3-data:/export
+      - minio3-vol:/export
     env_file: .env
     command: server http://minio1/export http://minio2/export http://minio3/export http://minio4/export 
     deploy:
@@ -75,7 +75,7 @@ services:
   minio4:
     image: pixelchrome/minio-arm
     volumes:
-      - minio4-data:/export
+      - minio4-vol:/export
     env_file: .env
     command: server http://minio1/export http://minio2/export http://minio3/export http://minio4/export 
     deploy:
@@ -89,10 +89,10 @@ services:
     networks:
       - minio-distributed
 volumes:
-  minio1-data:
-  minio2-data:
-  minio3-data:
-  minio4-data:
+  minio1-vol:
+  minio2-vol:
+  minio3-vol:
+  minio4-vol:
 
 networks:
   minio-distributed:

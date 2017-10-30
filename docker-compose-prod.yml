@@ -9,7 +9,7 @@ services:
     networks:
       -  minio-distributed
     ports:
-      - "81:80"
+      - "80"
     deploy:
       placement:
         constraints:
