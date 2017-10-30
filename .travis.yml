@@ -31,7 +31,6 @@ services:
 
 before_install:
   - sudo apt-get update -qq
-  - pip install awscli
   - docker run --rm --privileged multiarch/qemu-user-static:register
   - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
 
