@@ -3,8 +3,6 @@ version: '3'
 services:
   minio-nginx:
     image: stolemyusername/minio-nginx:arm
-    ports:
-      - "81:80"
     deploy:
       labels:
         - "traefik.frontend.entryPoints=http,https"
@@ -37,7 +35,7 @@ services:
         window: 60s
       placement:
         constraints:
-          - node.hostname == node1
+          - node.hostname == node3
     networks:
       - minio-distributed
   minio2:
@@ -53,7 +51,7 @@ services:
         window: 60s
       placement:
         constraints:
-          - node.hostname == node2
+          - node.hostname == node3
     networks:
       - minio-distributed
   minio3:
