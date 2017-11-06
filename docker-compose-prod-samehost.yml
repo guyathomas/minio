@@ -14,7 +14,7 @@ services:
         - "traefik.enable=true"
       placement:
         constraints:
-         - node.hostname.arch == arm
+         - node.labels.arch == arm
     depends_on:
       - minio1
       - minio2
@@ -25,7 +25,7 @@ services:
       - engauge
       - minio-distributed
   minio1:
-    image: minio/minio
+    image: pixelchrome/minio-arm
     volumes:
       - minio1-vol:/export
     env_file: .env
@@ -37,7 +37,7 @@ services:
         window: 60s
       placement:
         constraints:
-          - node.hostname == master
+          - node.hostname == node1
     networks:
       - minio-distributed
   minio2:
@@ -53,7 +53,7 @@ services:
         window: 60s
       placement:
         constraints:
-          - node.hostname == node1
+          - node.hostname == node2
     networks:
       - minio-distributed
   minio3:
@@ -69,7 +69,7 @@ services:
         window: 60s
       placement:
         constraints:
-          - node.hostname == node2
+          - node.hostname == node3
     networks:
       - minio-distributed
   minio4:
