@@ -4,7 +4,7 @@ services:
   minio-nginx:
     image: stolemyusername/minio-nginx:arm
     ports:
-     - "80"
+     - "30001:80"
     deploy:
       labels:
         - "traefik.frontend.entryPoints=http,https"
@@ -14,7 +14,7 @@ services:
         - "traefik.enable=true"
       placement:
         constraints:
-         - node.labels.arch == arm
+         - node.hostname.arch == arm
     depends_on:
       - minio1
       - minio2
@@ -25,7 +25,7 @@ services:
       - engauge
       - minio-distributed
   minio1:
-    image: pixelchrome/minio-arm
+    image: minio/minio
     volumes:
       - minio1-vol:/export
     env_file: .env
@@ -37,7 +37,7 @@ services:
         window: 60s
       placement:
         constraints:
-          - node.hostname == node1
+          - node.hostname == master
     networks:
       - minio-distributed
   minio2:
@@ -53,7 +53,7 @@ services:
         window: 60s
       placement:
         constraints:
-          - node.hostname == node2
+          - node.hostname == node1
     networks:
       - minio-distributed
   minio3:
@@ -69,7 +69,7 @@ services:
         window: 60s
       placement:
         constraints:
-          - node.hostname == node3
+          - node.hostname == node2
     networks:
       - minio-distributed
   minio4:
